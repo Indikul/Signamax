@@ -19,12 +19,12 @@ let salesData = {
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve index.html for the dashboard
+// Serve index.html for the dashboard at root URL
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Serve admin.html for the admin panel
+// Serve admin.html for the admin panel at /admin URL
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
