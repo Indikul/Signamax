@@ -1,0 +1,16 @@
+{
+  "name": "signamax",
+  "version": "1.0.0",
+  "description": "Sales Dashboard Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.0.0"
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}
