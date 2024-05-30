@@ -153,7 +153,8 @@
         const socket = io();
 
         function formatCurrency(value) {
-            return '$' + parseFloat(value.replace(/,/g, '')).toLocaleString('en-US');
+            const num = parseFloat(value.replace(/,/g, ''));
+            return isNaN(num) ? '' : '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
         function stripNonNumeric(value) {
