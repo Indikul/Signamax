@@ -220,12 +220,17 @@
         }
 
         document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', (e) => {
+                e.target.value = '';
+            });
+
             input.addEventListener('input', (e) => {
                 e.target.value = formatCurrency(stripNonNumeric(e.target.value));
             });
 
             input.addEventListener('paste', (e) => {
                 e.preventDefault();
+                e.target.value = '';
                 const pasteData = (e.clipboardData || window.clipboardData).getData('text');
                 e.target.value = formatCurrency(stripNonNumeric(pasteData));
             });
