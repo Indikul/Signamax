@@ -149,7 +149,7 @@
             const totalWorkingDays = getWorkingDaysInMonth();
             const passedWorkingDays = getPassedWorkingDays();
             const remainingDays = totalWorkingDays - passedWorkingDays;
-            const dailySalesRate = data.mtdSale / passedWorkingDays;
+            const dailySalesRate = data.mtdSale / (passedWorkingDays - 1);
             const requiredDailyRate = (data.monthTarget - data.mtdSale) / remainingDays;
 
             const gap = Math.round(data.todaySale - data.yesterdaySale);
@@ -273,7 +273,7 @@
                 }
             }
 
-            if (isWorkingDay(currentDate) && !isAfter4PM) {
+            if (isWorkingDay(currentDate) && isAfter4PM) {
                 passedWorkingDays++;
             }
 
