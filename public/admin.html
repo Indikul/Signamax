@@ -16,12 +16,25 @@
             height: 100vh;
             color: #ffffff;
         }
+        .header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            position: relative;
+        }
+        .logo {
+            width: 40%;
+            height: auto;
+            margin-bottom: 10px;
+        }
         .container {
             background-color: #000000;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             color: #fff;
+            width: 70%;
         }
         h2 {
             margin: 0;
@@ -61,33 +74,44 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="header">
+        <img src="logo.png" alt="Logo" class="logo">
         <h2>Admin Panel</h2>
+    </div>
+    <div class="container">
         <label for="mtdSale">Month to Date Sale:</label>
-        <input type="number" id="mtdSale" placeholder="Enter Month to Date Sale"><br>
+        <input type="text" id="mtdSale" placeholder="Enter Month to Date Sale"><br>
         <label for="monthTarget">Month Target:</label>
-        <input type="number" id="monthTarget" placeholder="Enter Month Target"><br>
+        <input type="text" id="monthTarget" placeholder="Enter Month Target"><br>
         <label for="yesterdaySale">Yesterday Sale:</label>
-        <input type="number" id="yesterdaySale" placeholder="Enter Yesterday Sale"><br>
+        <input type="text" id="yesterdaySale" placeholder="Enter Yesterday Sale"><br>
         <label for="todaySale">Today's Sale:</label>
-        <input type="number" id="todaySale" placeholder="Enter Today's Sale"><br>
+        <input type="text" id="todaySale" placeholder="Enter Today's Sale"><br>
         <label for="mtdBooking">MTD Booking:</label>
-        <input type="number" id="mtdBooking" placeholder="Enter Month to Date Booking"><br>
+        <input type="text" id="mtdBooking" placeholder="Enter Month to Date Booking"><br>
         <label for="todayBooking">Today Booking:</label>
-        <input type="number" id="todayBooking" placeholder="Enter Today's Booking"><br><br>
+        <input type="text" id="todayBooking" placeholder="Enter Today's Booking"><br><br>
         <button onclick="updateSalesData()">Update</button>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
 
+        function formatCurrency(value) {
+            return '$' + parseFloat(value.replace(/,/g, '')).toLocaleString('en-US');
+        }
+
+        function stripNonNumeric(value) {
+            return value.replace(/[^0-9.]/g, '');
+        }
+
         function updateSalesData() {
-            const mtdSale = parseFloat(document.getElementById('mtdSale').value);
-            const monthTarget = parseFloat(document.getElementById('monthTarget').value);
-            const yesterdaySale = parseFloat(document.getElementById('yesterdaySale').value);
-            const todaySale = parseFloat(document.getElementById('todaySale').value);
-            const mtdBooking = parseFloat(document.getElementById('mtdBooking').value);
-            const todayBooking = parseFloat(document.getElementById('todayBooking').value);
+            const mtdSale = parseFloat(stripNonNumeric(document.getElementById('mtdSale').value));
+            const monthTarget = parseFloat(stripNonNumeric(document.getElementById('monthTarget').value));
+            const yesterdaySale = parseFloat(stripNonNumeric(document.getElementById('yesterdaySale').value));
+            const todaySale = parseFloat(stripNonNumeric(document.getElementById('todaySale').value));
+            const mtdBooking = parseFloat(stripNonNumeric(document.getElementById('mtdBooking').value));
+            const todayBooking = parseFloat(stripNonNumeric(document.getElementById('todayBooking').value));
 
             const data = {
                 mtdSale: mtdSale,
@@ -102,6 +126,18 @@
 
             socket.emit('updateSalesData', data);
         }
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', (e) => {
+                e.target.value = formatCurrency(stripNonNumeric(e.target.value));
+            });
+
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+                e.target.value = formatCurrency(stripNonNumeric(pasteData));
+            });
+        });
 
         socket.on('connect', () => {
             console.log('Connected to server');
