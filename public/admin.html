@@ -95,8 +95,18 @@
                 todayBooking: todayBooking
             };
 
+            console.log('Emitting updateSalesData event:', data); // Debugging line
+
             socket.emit('updateSalesData', data);
         }
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+        });
     </script>
 </body>
 </html>
