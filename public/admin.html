@@ -181,12 +181,41 @@
 
             socket.emit('updateSalesData', data);
 
+            // Save the values to localStorage
+            localStorage.setItem('mtdSale', document.getElementById('mtdSale').value);
+            localStorage.setItem('monthTarget', document.getElementById('monthTarget').value);
+            localStorage.setItem('yesterdaySale', document.getElementById('yesterdaySale').value);
+            localStorage.setItem('todaySale', document.getElementById('todaySale').value);
+            localStorage.setItem('mtdBooking', document.getElementById('mtdBooking').value);
+            localStorage.setItem('todayBooking', document.getElementById('todayBooking').value);
+
             // Visual feedback for button press
             const updateButton = document.getElementById('updateButton');
             updateButton.classList.add('button-pressed');
             setTimeout(() => {
                 updateButton.classList.remove('button-pressed');
             }, 200);
+        }
+
+        function loadSavedValues() {
+            if (localStorage.getItem('mtdSale')) {
+                document.getElementById('mtdSale').value = localStorage.getItem('mtdSale');
+            }
+            if (localStorage.getItem('monthTarget')) {
+                document.getElementById('monthTarget').value = localStorage.getItem('monthTarget');
+            }
+            if (localStorage.getItem('yesterdaySale')) {
+                document.getElementById('yesterdaySale').value = localStorage.getItem('yesterdaySale');
+            }
+            if (localStorage.getItem('todaySale')) {
+                document.getElementById('todaySale').value = localStorage.getItem('todaySale');
+            }
+            if (localStorage.getItem('mtdBooking')) {
+                document.getElementById('mtdBooking').value = localStorage.getItem('mtdBooking');
+            }
+            if (localStorage.getItem('todayBooking')) {
+                document.getElementById('todayBooking').value = localStorage.getItem('todayBooking');
+            }
         }
 
         document.querySelectorAll('input').forEach(input => {
@@ -200,6 +229,9 @@
                 e.target.value = formatCurrency(stripNonNumeric(pasteData));
             });
         });
+
+        // Load saved values when the page loads
+        window.onload = loadSavedValues;
 
         socket.on('connect', () => {
             console.log('Connected to server');
