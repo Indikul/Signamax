@@ -158,17 +158,24 @@
         }
 
         function stripNonNumeric(value) {
-            // Allow decimal point
-            return value.replace(/[^0-9.]/g, '');
+            return value.replace(/[^0-9]/g, '');
+        }
+
+        function formatToCurrency(value) {
+            const numericValue = stripNonNumeric(value);
+            const integerPart = numericValue.slice(0, -2);
+            const decimalPart = numericValue.slice(-2);
+            const formattedNumber = integerPart + '.' + decimalPart;
+            return formatCurrency(formattedNumber);
         }
 
         function updateSalesData() {
-            const mtdSale = parseFloat(stripNonNumeric(document.getElementById('mtdSale').value));
-            const monthTarget = parseFloat(stripNonNumeric(document.getElementById('monthTarget').value));
-            const yesterdaySale = parseFloat(stripNonNumeric(document.getElementById('yesterdaySale').value));
-            const todaySale = parseFloat(stripNonNumeric(document.getElementById('todaySale').value));
-            const mtdBooking = parseFloat(stripNonNumeric(document.getElementById('mtdBooking').value));
-            const todayBooking = parseFloat(stripNonNumeric(document.getElementById('todayBooking').value));
+            const mtdSale = parseFloat(document.getElementById('mtdSale').value.replace(/[^0-9.]/g, ''));
+            const monthTarget = parseFloat(document.getElementById('monthTarget').value.replace(/[^0-9.]/g, ''));
+            const yesterdaySale = parseFloat(document.getElementById('yesterdaySale').value.replace(/[^0-9.]/g, ''));
+            const todaySale = parseFloat(document.getElementById('todaySale').value.replace(/[^0-9.]/g, ''));
+            const mtdBooking = parseFloat(document.getElementById('mtdBooking').value.replace(/[^0-9.]/g, ''));
+            const todayBooking = parseFloat(document.getElementById('todayBooking').value.replace(/[^0-9.]/g, ''));
 
             const data = {
                 mtdSale: mtdSale,
@@ -226,14 +233,14 @@
             });
 
             input.addEventListener('input', (e) => {
-                e.target.value = formatCurrency(stripNonNumeric(e.target.value));
+                e.target.value = formatToCurrency(e.target.value);
             });
 
             input.addEventListener('paste', (e) => {
                 e.preventDefault();
                 e.target.value = '';
                 const pasteData = (e.clipboardData || window.clipboardData).getData('text');
-                e.target.value = formatCurrency(stripNonNumeric(pasteData));
+                e.target.value = formatToCurrency(pasteData);
             });
         });
 
