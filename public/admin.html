@@ -39,9 +39,11 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             color: #fff;
             width: 70%;
+            max-width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-sizing: border-box;
         }
         h2 {
             margin: 0;
@@ -64,6 +66,7 @@
             font-size: 1.2em;
             color: #000;
             background-color: #ffffff;
+            box-sizing: border-box;
         }
         button {
             width: 100%;
@@ -85,6 +88,41 @@
         }
         button:hover {
             background-color: #ec971f;
+        }
+        @media (max-width: 768px) {
+            .logo {
+                width: 60%;
+            }
+            .title {
+                font-size: 1.8em;
+            }
+            .container {
+                width: 90%;
+            }
+            label {
+                font-size: 1em;
+            }
+            input, button {
+                font-size: 1em;
+            }
+        }
+        @media (max-width: 480px) {
+            .logo {
+                width: 80%;
+            }
+            .title {
+                font-size: 1.5em;
+            }
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+            label {
+                font-size: 0.9em;
+            }
+            input, button {
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
