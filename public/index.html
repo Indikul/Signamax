@@ -28,12 +28,12 @@
             position: relative;
         }
         .logo {
-            width: 40%;
+            width: 30%;
             height: auto;
             margin-bottom: 10px;
         }
         .title {
-            font-size: 2.5em;
+            font-size: 3em;
             margin: 0;
             color: #f0ad4e;
         }
@@ -41,20 +41,25 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            font-size: 1.2em;
+            font-size: 1.5em;
             color: #cccccc;
         }
         .container {
-            width: 95%;
+            width: 90%;
             max-width: 1600px;
             text-align: center;
         }
-        #result {
+        .cluster-title {
+            font-size: 2em;
+            color: #f0ad4e;
+            margin-top: 20px;
+        }
+        .cluster {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .box {
             background: rgba(255, 255, 255, 0.1);
@@ -68,8 +73,8 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s ease;
             flex: 1;
-            min-width: 200px;
-            max-width: 32%;
+            min-width: 250px;
+            max-width: 30%;
             box-sizing: border-box;
         }
         .box-content {
@@ -85,7 +90,7 @@
             transform: translateY(-10px);
         }
         .figure {
-            font-size: clamp(1em, 2.5vw, 2.5em);
+            font-size: 2.5em;
             color: #ffffff;
             margin: 0;
             white-space: nowrap;
@@ -95,7 +100,7 @@
             box-sizing: border-box;
         }
         .description {
-            font-size: 1.5vw;
+            font-size: 1.5em;
             color: #cccccc;
             margin-top: 10px;
         }
@@ -104,16 +109,8 @@
             bottom: 10px;
             width: 100%;
             text-align: center;
-            font-size: 1.2em;
+            font-size: 1.5em;
             color: #cccccc;
-        }
-        .booking-title {
-            width: 100%;
-            text-align: center;
-            font-size: 1.8em;
-            color: #f0ad4e;
-            margin-top: 20px;
-            display: none; /* Hide the subtitle initially */
         }
         .positive-gap {
             background-color: #28a745 !important;
@@ -149,9 +146,17 @@
         <h1 class="title">Sales Dashboard</h1>
     </div>
     <div class="container">
-        <div id="result"></div>
-        <div class="booking-title" id="booking-title">Booking</div>
-        <div id="booking-result"></div>
+        <div class="cluster-title">Sales Performance</div>
+        <div class="cluster" id="performance-cluster"></div>
+
+        <div class="cluster-title">Daily Sales</div>
+        <div class="cluster" id="daily-sales-cluster"></div>
+
+        <div class="cluster-title">Daily Targets</div>
+        <div class="cluster" id="daily-targets-cluster"></div>
+
+        <div class="cluster-title" id="booking-title">Booking</div>
+        <div class="cluster" id="booking-cluster"></div>
     </div>
     <div class="footer" id="footer"></div>
     <script src="/socket.io/socket.io.js"></script>
@@ -193,7 +198,7 @@
 
             const actualDailyClass = dailySalesRate >= requiredDailyRate ? 'green-box' : 'red-box';
 
-            document.getElementById('result').innerHTML = `
+            document.getElementById('performance-cluster').innerHTML = `
                 <div class="box">
                     <div class="box-content">
                         <span class="figure">$${formattedMTDSale}</span>
@@ -212,6 +217,9 @@
                         <span class="description">Achieved</span>
                     </div>
                 </div>
+            `;
+
+            document.getElementById('daily-sales-cluster').innerHTML = `
                 <div class="box">
                     <div class="box-content">
                         <span class="figure">$${formattedYesterdaySale}</span>
@@ -230,6 +238,9 @@
                         <span class="description">Gap</span>
                     </div>
                 </div>
+            `;
+
+            document.getElementById('daily-targets-cluster').innerHTML = `
                 <div class="box">
                     <div class="box-content">
                         <span class="figure">$${formattedRequiredDailyRate}</span>
@@ -244,7 +255,7 @@
                 </div>
             `;
 
-            document.getElementById('booking-result').innerHTML = `
+            document.getElementById('booking-cluster').innerHTML = `
                 <div class="box">
                     <div class="box-content">
                         <span class="figure">$${formattedMTDBooking}</span>
