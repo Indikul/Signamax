@@ -45,8 +45,8 @@
             color: #cccccc;
         }
         .container {
-            width: 90%;
-            max-width: 1600px;
+            width: 95%;
+            max-width: 1400px;
             text-align: center;
         }
         .cluster-title {
@@ -57,8 +57,7 @@
         .cluster {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 20px;
+            justify-content: space-around;
             margin-top: 10px;
         }
         .box {
@@ -76,6 +75,7 @@
             min-width: 250px;
             max-width: 30%;
             box-sizing: border-box;
+            margin: 10px;
         }
         .box-content {
             display: flex;
@@ -153,10 +153,10 @@
         <div class="cluster" id="daily-sales-cluster"></div>
 
         <div class="cluster-title">Daily Targets</div>
-        <div class="cluster" id="daily-targets-cluster"></div>
+        <div class="cluster" id="daily-targets-cluster" style="justify-content: center;"></div>
 
         <div class="cluster-title" id="booking-title">Booking</div>
-        <div class="cluster" id="booking-cluster"></div>
+        <div class="cluster" id="booking-cluster" style="justify-content: center;"></div>
     </div>
     <div class="footer" id="footer"></div>
     <script src="/socket.io/socket.io.js"></script>
@@ -202,7 +202,7 @@
                 <div class="box">
                     <div class="box-content">
                         <span class="figure">$${formattedMTDSale}</span>
-                        <span class="description">Sale</span>
+                        <span class="description">MTD Sale</span>
                     </div>
                 </div>
                 <div class="box">
@@ -244,7 +244,7 @@
                 <div class="box">
                     <div class="box-content">
                         <span class="figure">$${formattedRequiredDailyRate}</span>
-                        <span class="description">Daily Target</span>
+                        <span class="description">Required Daily</span>
                     </div>
                 </div>
                 <div class="box ${actualDailyClass}">
