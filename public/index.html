@@ -43,35 +43,6 @@
             text-align: center;
             font-size: 1.2em;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-        .data-box.green {
-            background-color: #28a745;
-        }
-        .data-box.red {
-            background-color: #dc3545;
-        }
-        .data-box.pulsing {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        .moving-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 5px;
-            background-color: white;
-            animation: moveBar 5s linear infinite;
-        }
-        @keyframes moveBar {
-            0% { left: -5px; }
-            100% { left: 100%; }
         }
         .footer {
             text-align: center;
@@ -104,7 +75,7 @@
         const socket = io();
 
         socket.on('updateDashboard', (data) => {
-            console.log('Received updateDashboard event:', data); // Debugging line
+            console.log('Received updateDashboard event:', data);
 
             document.getElementById('saleValue').textContent = data.mtdSale.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('targetValue').textContent = data.monthTarget.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -114,24 +85,9 @@
 
             const gapValue = data.todaySale - data.yesterdaySale;
             document.getElementById('gapValue').textContent = gapValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            if (gapValue > 0) {
-                document.getElementById('gap').classList.add('green', 'pulsing');
-                document.getElementById('gap').classList.remove('red');
-            } else {
-                document.getElementById('gap').classList.add('red', 'pulsing');
-                document.getElementById('gap').classList.remove('green');
-            }
 
             document.getElementById('dailyTargetValue').textContent = data.dailyTarget.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('actualDailyValue').textContent = data.actualDaily.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-            if (data.actualDaily < data.dailyTarget) {
-                document.getElementById('actualDaily').classList.add('red', 'pulsing');
-                document.getElementById('actualDaily').classList.remove('green');
-            } else {
-                document.getElementById('actualDaily').classList.add('green', 'pulsing');
-                document.getElementById('actualDaily').classList.remove('red');
-            }
 
             document.getElementById('mtdValue').textContent = data.mtdBooking.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('todayBookingValue').textContent = data.todayBooking.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -154,14 +110,6 @@
 
         setInterval(updateDateTime, 1000);
         updateDateTime();
-
-        // Move bar to avoid pixel burning
-        setInterval(() => {
-            const bar = document.createElement('div');
-            bar.classList.add('moving-bar');
-            document.body.appendChild(bar);
-            setTimeout(() => document.body.removeChild(bar), 5000);
-        }, 30000);
     </script>
 </body>
 </html>
