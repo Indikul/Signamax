@@ -12,10 +12,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             height: 100vh;
             color: #ffffff;
             margin: 0;
+            overflow: auto;
         }
         .header {
             width: 100%;
@@ -78,13 +79,13 @@
             color: #fff;
             font-size: 1.2em;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px #d98424;
         }
         button:active {
             background-color: #d98424;
-        }
-        .button-pressed {
-            background-color: #d98424;
+            box-shadow: 0 2px #d98424;
+            transform: translateY(2px);
         }
         button:hover {
             background-color: #ec971f;
