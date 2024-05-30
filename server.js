@@ -34,6 +34,7 @@ io.on('connection', (socket) => {
   socket.emit('updateData', salesData);
 
   socket.on('updateSalesData', (data) => {
+    console.log('Received updateSalesData event:', data); // Debugging line
     salesData = data;
     io.emit('updateData', salesData);
   });
