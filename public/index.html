@@ -137,6 +137,13 @@
             updateDashboard(data);
         });
 
+        const holidays = [
+            "1/1/2024",  // New Year's Day
+            "7/4/2024",  // Independence Day
+            "12/25/2024" // Christmas Day
+            // Add more holidays here in "M/D/YYYY" format
+        ];
+
         function updateDashboard(data) {
             const targetPercentage = (data.mtdSale / data.monthTarget) * 100;
             const totalWorkingDays = getWorkingDaysInMonth();
