@@ -15,6 +15,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: space-between;
+            height: 100vh;
         }
         .header {
             text-align: center;
@@ -71,13 +73,16 @@
             0% { left: -5px; }
             100% { left: 100%; }
         }
+        .footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <img src="logo.png" alt="Logo" class="logo">
         <h1 class="title">Sales Dashboard</h1>
-        <h2 id="dataAsAt"></h2>
     </div>
     <div class="data-container">
         <div class="data-box" id="sale">Sale: $<span id="saleValue"></span></div>
@@ -91,19 +96,23 @@
         <div class="data-box" id="mtd">MTD: $<span id="mtdValue"></span></div>
         <div class="data-box" id="todayBooking">Today: $<span id="todayBookingValue"></span></div>
     </div>
+    <div class="footer">
+        <h2 id="dataAsAt"></h2>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
 
         socket.on('updateDashboard', (data) => {
-            document.getElementById('saleValue').textContent = data.sale.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-            document.getElementById('targetValue').textContent = data.target.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-            document.getElementById('achievedValue').textContent = data.achieved.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-            document.getElementById('yesterdayValue').textContent = data.yesterday.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-            document.getElementById('todayValue').textContent = data.today.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            console.log('Received updateDashboard event:', data); // Debugging line
+            document.getElementById('saleValue').textContent = data.mtdSale.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('targetValue').textContent = data.monthTarget.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('achievedValue').textContent = (data.mtdSale / data.monthTarget * 100).toFixed(2) + '%';
+            document.getElementById('yesterdayValue').textContent = data.yesterdaySale.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('todayValue').textContent = data.todaySale.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-            const gapValue = data.today - data.yesterday;
-            document.getElementById('gapValue').textContent = gapValue.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            const gapValue = data.todaySale - data.yesterdaySale;
+            document.getElementById('gapValue').textContent = gapValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             if (gapValue > 0) {
                 document.getElementById('gap').classList.add('green', 'pulsing');
                 document.getElementById('gap').classList.remove('red');
@@ -112,8 +121,8 @@
                 document.getElementById('gap').classList.remove('green');
             }
 
-            document.getElementById('dailyTargetValue').textContent = data.dailyTarget.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-            document.getElementById('actualDailyValue').textContent = data.actualDaily.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            document.getElementById('dailyTargetValue').textContent = data.dailyTarget.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('actualDailyValue').textContent = data.actualDaily.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             if (data.actualDaily < data.dailyTarget) {
                 document.getElementById('actualDaily').classList.add('red', 'pulsing');
@@ -123,8 +132,8 @@
                 document.getElementById('actualDaily').classList.remove('red');
             }
 
-            document.getElementById('mtdValue').textContent = data.mtd.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-            document.getElementById('todayBookingValue').textContent = data.todayBooking.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            document.getElementById('mtdValue').textContent = data.mtdBooking.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('todayBookingValue').textContent = data.todayBooking.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         });
 
         socket.on('connect', () => {
