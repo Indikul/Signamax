@@ -77,6 +77,12 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+        button:active {
+            background-color: #d98424;
+        }
+        .button-pressed {
+            background-color: #d98424;
+        }
         button:hover {
             background-color: #ec971f;
         }
@@ -101,7 +107,7 @@
         <input type="text" id="mtdBooking" placeholder="Enter Month to Date Booking"><br>
         <label for="todayBooking">Today Booking:</label>
         <input type="text" id="todayBooking" placeholder="Enter Today's Booking"><br><br>
-        <button onclick="updateSalesData()">Update</button>
+        <button id="updateButton" onclick="updateSalesData()">Update</button>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -135,6 +141,13 @@
             console.log('Emitting updateSalesData event:', data); // Debugging line
 
             socket.emit('updateSalesData', data);
+
+            // Visual feedback for button press
+            const updateButton = document.getElementById('updateButton');
+            updateButton.classList.add('button-pressed');
+            setTimeout(() => {
+                updateButton.classList.remove('button-pressed');
+            }, 200);
         }
 
         document.querySelectorAll('input').forEach(input => {
