@@ -85,16 +85,16 @@
         <h1 class="title">Sales Dashboard</h1>
     </div>
     <div class="data-container">
-        <div class="data-box" id="sale">Sale: $<span id="saleValue"></span></div>
-        <div class="data-box" id="target">Target: $<span id="targetValue"></span></div>
-        <div class="data-box" id="achieved">Achieved: $<span id="achievedValue"></span></div>
-        <div class="data-box" id="yesterday">Yesterday: $<span id="yesterdayValue"></span></div>
-        <div class="data-box" id="today">Today: $<span id="todayValue"></span></div>
-        <div class="data-box" id="gap">Gap: $<span id="gapValue"></span></div>
-        <div class="data-box" id="dailyTarget">Daily Target: $<span id="dailyTargetValue"></span></div>
-        <div class="data-box" id="actualDaily">Actual Daily: $<span id="actualDailyValue"></span></div>
-        <div class="data-box" id="mtd">MTD: $<span id="mtdValue"></span></div>
-        <div class="data-box" id="todayBooking">Today: $<span id="todayBookingValue"></span></div>
+        <div class="data-box" id="sale">Sale: <span id="saleValue"></span></div>
+        <div class="data-box" id="target">Target: <span id="targetValue"></span></div>
+        <div class="data-box" id="achieved">Achieved: <span id="achievedValue"></span></div>
+        <div class="data-box" id="yesterday">Yesterday: <span id="yesterdayValue"></span></div>
+        <div class="data-box" id="today">Today: <span id="todayValue"></span></div>
+        <div class="data-box" id="gap">Gap: <span id="gapValue"></span></div>
+        <div class="data-box" id="dailyTarget">Daily Target: <span id="dailyTargetValue"></span></div>
+        <div class="data-box" id="actualDaily">Actual Daily: <span id="actualDailyValue"></span></div>
+        <div class="data-box" id="mtd">MTD: <span id="mtdValue"></span></div>
+        <div class="data-box" id="todayBooking">Today Booking: <span id="todayBookingValue"></span></div>
     </div>
     <div class="footer">
         <h2 id="dataAsAt"></h2>
@@ -105,9 +105,10 @@
 
         socket.on('updateDashboard', (data) => {
             console.log('Received updateDashboard event:', data); // Debugging line
+
             document.getElementById('saleValue').textContent = data.mtdSale.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('targetValue').textContent = data.monthTarget.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            document.getElementById('achievedValue').textContent = (data.mtdSale / data.monthTarget * 100).toFixed(2) + '%';
+            document.getElementById('achievedValue').textContent = ((data.mtdSale / data.monthTarget) * 100).toFixed(2) + '%';
             document.getElementById('yesterdayValue').textContent = data.yesterdaySale.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('todayValue').textContent = data.todaySale.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
