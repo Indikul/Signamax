@@ -210,7 +210,7 @@
 
             const gap = Math.round(data.todaySale - data.yesterdaySale);
             const gapClass = gap >= 0 ? 'positive-gap' : 'negative-gap';
-            const formattedGap = gap >= 0 ? `+${gap.toLocaleString('en-US')}` : gap.toLocaleString('en-US');
+            const formattedGap = gap >= 0 ? `$${gap.toLocaleString('en-US')}` : `$${gap.toLocaleString('en-US')}`;
 
             const formattedMTDSale = Math.round(data.mtdSale).toLocaleString('en-US');
             const formattedMonthTarget = Math.round(data.monthTarget).toLocaleString('en-US');
@@ -221,6 +221,8 @@
             const formattedTargetPercentage = Math.round(targetPercentage).toLocaleString('en-US');
             const formattedMTDBooking = Math.round(data.mtdBooking).toLocaleString('en-US');
             const formattedTodayBooking = Math.round(data.todayBooking).toLocaleString('en-US');
+            const formattedBackorder = Math.round(data.backorder).toLocaleString('en-US');
+            const formattedRemainingDays = remainingDays;
 
             const actualDailyClass = dailySalesRate >= requiredDailyRate ? 'green-box' : 'red-box';
 
@@ -279,6 +281,12 @@
                         <span class="description">Actual Daily</span>
                     </div>
                 </div>
+                <div class="box">
+                    <div class="box-content">
+                        <span class="figure">${formattedRemainingDays}</span>
+                        <span class="description">Remaining Days</span>
+                    </div>
+                </div>
             `;
 
             document.getElementById('booking-cluster').innerHTML = `
@@ -292,6 +300,12 @@
                     <div class="box-content">
                         <span class="figure">$${formattedTodayBooking}</span>
                         <span class="description">Today</span>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="box-content">
+                        <span class="figure">$${formattedBackorder}</span>
+                        <span class="description">Backorder</span>
                     </div>
                 </div>
             `;
