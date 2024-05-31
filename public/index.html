@@ -137,30 +137,44 @@
             0% { left: -5px; }
             100% { left: 100%; }
         }
+        #scale-container {
+            transform-origin: top left;
+        }
     </style>
 </head>
 <body>
-    <div class="last-updated" id="lastUpdated">Data As At: </div>
-    <div class="header">
-        <img src="logo.png" alt="Logo" class="logo">
-        <h1 class="title">Sales Dashboard</h1>
+    <div id="scale-container">
+        <div class="last-updated" id="lastUpdated">Data As At: </div>
+        <div class="header">
+            <img src="logo.png" alt="Logo" class="logo">
+            <h1 class="title">Sales Dashboard</h1>
+        </div>
+        <div class="container">
+            <div class="cluster-title">Sales Performance</div>
+            <div class="cluster" id="performance-cluster"></div>
+
+            <div class="cluster-title">Daily Sales</div>
+            <div class="cluster" id="daily-sales-cluster"></div>
+
+            <div class="cluster-title">Daily Targets</div>
+            <div class="cluster" id="daily-targets-cluster" style="justify-content: center;"></div>
+
+            <div class="cluster-title" id="booking-title">Booking</div>
+            <div class="cluster" id="booking-cluster" style="justify-content: center;"></div>
+        </div>
+        <div class="footer" id="footer"></div>
     </div>
-    <div class="container">
-        <div class="cluster-title">Sales Performance</div>
-        <div class="cluster" id="performance-cluster"></div>
-
-        <div class="cluster-title">Daily Sales</div>
-        <div class="cluster" id="daily-sales-cluster"></div>
-
-        <div class="cluster-title">Daily Targets</div>
-        <div class="cluster" id="daily-targets-cluster" style="justify-content: center;"></div>
-
-        <div class="cluster-title" id="booking-title">Booking</div>
-        <div class="cluster" id="booking-cluster" style="justify-content: center;"></div>
-    </div>
-    <div class="footer" id="footer"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        function scaleContent() {
+            const scaleContainer = document.getElementById('scale-container');
+            const scale = Math.min(window.innerWidth / scaleContainer.offsetWidth, window.innerHeight / scaleContainer.offsetHeight);
+            scaleContainer.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', scaleContent);
+        window.addEventListener('load', scaleContent);
+
         const socket = io();
 
         socket.on('updateData', (data) => {
