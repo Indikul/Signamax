@@ -156,7 +156,9 @@
         <label for="mtdBooking">MTD Booking:</label>
         <input type="text" id="mtdBooking" placeholder="Enter Month to Date Booking"><br>
         <label for="todayBooking">Today Booking:</label>
-        <input type="text" id="todayBooking" placeholder="Enter Today's Booking"><br><br>
+        <input type="text" id="todayBooking" placeholder="Enter Today's Booking"><br>
+        <label for="backorder">Backorder Value:</label>
+        <input type="text" id="backorder" placeholder="Enter Backorder Value"><br><br>
         <button id="updateButton" onclick="updateSalesData()">Update</button>
     </div>
     <script src="/socket.io/socket.io.js"></script>
@@ -187,6 +189,7 @@
             const todaySale = parseFloat(document.getElementById('todaySale').value.replace(/[^0-9.]/g, ''));
             const mtdBooking = parseFloat(document.getElementById('mtdBooking').value.replace(/[^0-9.]/g, ''));
             const todayBooking = parseFloat(document.getElementById('todayBooking').value.replace(/[^0-9.]/g, ''));
+            const backorder = parseFloat(document.getElementById('backorder').value.replace(/[^0-9.]/g, ''));
 
             const data = {
                 mtdSale: mtdSale,
@@ -194,7 +197,8 @@
                 yesterdaySale: yesterdaySale,
                 todaySale: todaySale,
                 mtdBooking: mtdBooking,
-                todayBooking: todayBooking
+                todayBooking: todayBooking,
+                backorder: backorder
             };
 
             console.log('Emitting updateSalesData event:', data); // Debugging line
@@ -208,6 +212,7 @@
             localStorage.setItem('todaySale', document.getElementById('todaySale').value);
             localStorage.setItem('mtdBooking', document.getElementById('mtdBooking').value);
             localStorage.setItem('todayBooking', document.getElementById('todayBooking').value);
+            localStorage.setItem('backorder', document.getElementById('backorder').value);
 
             // Visual feedback for button press
             const updateButton = document.getElementById('updateButton');
@@ -235,6 +240,9 @@
             }
             if (localStorage.getItem('todayBooking')) {
                 document.getElementById('todayBooking').value = localStorage.getItem('todayBooking');
+            }
+            if (localStorage.getItem('backorder')) {
+                document.getElementById('backorder').value = localStorage.getItem('backorder');
             }
         }
 
