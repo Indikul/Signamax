@@ -12,7 +12,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             height: 100vh;
             color: #ffffff;
             margin: 0;
@@ -32,6 +32,11 @@
         .title {
             font-size: 2.5em;
             color: #f0ad4e;
+        }
+        .subtitle {
+            font-size: 2em;
+            color: #f0ad4e;
+            margin-bottom: 20px;
         }
         .container {
             background-color: #000000;
@@ -97,6 +102,9 @@
             .title {
                 font-size: 1.8em;
             }
+            .subtitle {
+                font-size: 1.5em;
+            }
             .container {
                 width: 90%;
             }
@@ -113,6 +121,9 @@
             }
             .title {
                 font-size: 1.5em;
+            }
+            .subtitle {
+                font-size: 1.2em;
             }
             .container {
                 width: 100%;
@@ -131,7 +142,7 @@
     <div class="header">
         <img src="logo.png" alt="Logo" class="logo">
         <h1 class="title">Sales Dashboard</h1>
-        <h2>Admin Panel</h2>
+        <h2 class="subtitle">Admin Panel</h2>
     </div>
     <div class="container">
         <label for="mtdSale">Month to Date Sale:</label>
