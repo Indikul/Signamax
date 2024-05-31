@@ -145,7 +145,11 @@
 
         @media (max-width: 768px) {
             body {
-                overflow: auto;
+                overflow-y: auto;
+            }
+            #scale-container {
+                width: 100%;
+                height: auto;
             }
             .logo {
                 width: 50%;
@@ -403,12 +407,14 @@
         }
 
         // Move bar to avoid pixel burning
-        setInterval(() => {
-            const bar = document.createElement('div');
-            bar.classList.add('moving-bar');
-            document.body.appendChild(bar);
-            setTimeout(() => document.body.removeChild(bar), 5000);
-        }, 30000);
+        if (window.innerWidth > 768) {
+            setInterval(() => {
+                const bar = document.createElement('div');
+                bar.classList.add('moving-bar');
+                document.body.appendChild(bar);
+                setTimeout(() => document.body.removeChild(bar), 5000);
+            }, 30000);
+        }
     </script>
 </body>
 </html>
