@@ -151,6 +151,10 @@
             }
             .last-updated {
                 font-size: 1em;
+                position: static;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                order: 3;
             }
             .cluster-title {
                 font-size: 1.5em;
@@ -177,7 +181,6 @@
     </style>
 </head>
 <body>
-    <div class="last-updated" id="lastUpdated">Data As At: </div>
     <div class="header">
         <img src="logo.png" alt="Logo" class="logo">
         <h1 class="title">Sales Dashboard</h1>
@@ -195,6 +198,7 @@
         <div class="cluster-title" id="booking-title">Booking</div>
         <div class="cluster" id="booking-cluster"></div>
     </div>
+    <div class="last-updated" id="lastUpdated">Data As At: </div>
     <div class="footer" id="footer"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
