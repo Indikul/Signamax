@@ -13,21 +13,11 @@
             margin: 0;
             padding: 0;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-        #scale-container {
-            display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            transform-origin: top left;
-            width: 100%;
-            height: 100%;
-            padding: 20px 0;
-            box-sizing: border-box;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow: hidden;
         }
         .header {
             width: 100%;
@@ -56,6 +46,11 @@
             width: 95%;
             max-width: 1600px;
             text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .cluster-title {
             font-size: 3em;
@@ -66,6 +61,7 @@
             display: flex;
             justify-content: space-around;
             margin-top: 10px;
+            width: 100%;
         }
         .box {
             background: rgba(255, 255, 255, 0.1);
@@ -147,11 +143,6 @@
             body {
                 overflow-y: auto;
             }
-            #scale-container {
-                width: 100%;
-                height: auto;
-                padding: 20px;
-            }
             .logo {
                 width: 50%;
             }
@@ -186,47 +177,27 @@
     </style>
 </head>
 <body>
-    <div id="scale-container">
-        <div class="last-updated" id="lastUpdated">Data As At: </div>
-        <div class="header">
-            <img src="logo.png" alt="Logo" class="logo">
-            <h1 class="title">Sales Dashboard</h1>
-        </div>
-        <div class="container">
-            <div class="cluster-title">Sales Performance</div>
-            <div class="cluster" id="performance-cluster"></div>
-
-            <div class="cluster-title">Daily Sales</div>
-            <div class="cluster" id="daily-sales-cluster"></div>
-
-            <div class="cluster-title">Daily Targets</div>
-            <div class="cluster" id="daily-targets-cluster"></div>
-
-            <div class="cluster-title" id="booking-title">Booking</div>
-            <div class="cluster" id="booking-cluster"></div>
-        </div>
-        <div class="footer" id="footer"></div>
+    <div class="last-updated" id="lastUpdated">Data As At: </div>
+    <div class="header">
+        <img src="logo.png" alt="Logo" class="logo">
+        <h1 class="title">Sales Dashboard</h1>
     </div>
+    <div class="container">
+        <div class="cluster-title">Sales Performance</div>
+        <div class="cluster" id="performance-cluster"></div>
+
+        <div class="cluster-title">Daily Sales</div>
+        <div class="cluster" id="daily-sales-cluster"></div>
+
+        <div class="cluster-title">Daily Targets</div>
+        <div class="cluster" id="daily-targets-cluster"></div>
+
+        <div class="cluster-title" id="booking-title">Booking</div>
+        <div class="cluster" id="booking-cluster"></div>
+    </div>
+    <div class="footer" id="footer"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        function scaleContent() {
-            const scaleContainer = document.getElementById('scale-container');
-            const containerHeight = scaleContainer.scrollHeight;
-            const containerWidth = scaleContainer.scrollWidth;
-
-            const scaleX = window.innerWidth / containerWidth;
-            const scaleY = window.innerHeight / containerHeight;
-
-            const scale = Math.min(scaleX, scaleY);
-            scaleContainer.style.transform = `scale(${scale}) translate(-50%, -50%)`;
-            scaleContainer.style.position = 'absolute';
-            scaleContainer.style.top = '50%';
-            scaleContainer.style.left = '50%';
-        }
-
-        window.addEventListener('resize', scaleContent);
-        window.addEventListener('load', scaleContent);
-
         const socket = io();
 
         socket.on('updateData', (data) => {
