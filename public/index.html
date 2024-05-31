@@ -168,10 +168,17 @@
     <script>
         function scaleContent() {
             const scaleContainer = document.getElementById('scale-container');
-            const scaleX = window.innerWidth / scaleContainer.offsetWidth;
-            const scaleY = window.innerHeight / scaleContainer.offsetHeight;
+            const containerHeight = scaleContainer.offsetHeight;
+            const containerWidth = scaleContainer.offsetWidth;
+
+            const scaleX = window.innerWidth / containerWidth;
+            const scaleY = window.innerHeight / containerHeight;
+
             const scale = Math.min(scaleX, scaleY);
-            scaleContainer.style.transform = `scale(${scale})`;
+            scaleContainer.style.transform = `scale(${scale}) translate(-50%, -50%)`;
+            scaleContainer.style.position = 'absolute';
+            scaleContainer.style.top = '50%';
+            scaleContainer.style.left = '50%';
         }
 
         window.addEventListener('resize', scaleContent);
