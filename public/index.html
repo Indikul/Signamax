@@ -13,12 +13,17 @@
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             height: 100vh;
             overflow: hidden;
-            position: relative;
+        }
+        #scale-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform-origin: top left;
         }
         .header {
             width: 100%;
@@ -105,12 +110,10 @@
             margin-top: 10px;
         }
         .footer {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
             text-align: center;
             font-size: 1.5em;
             color: #cccccc;
+            margin-top: 20px;
         }
         .positive-gap {
             background-color: #28a745 !important;
@@ -136,9 +139,6 @@
         @keyframes moveBar {
             0% { left: -5px; }
             100% { left: 100%; }
-        }
-        #scale-container {
-            transform-origin: top left;
         }
     </style>
 </head>
@@ -168,7 +168,9 @@
     <script>
         function scaleContent() {
             const scaleContainer = document.getElementById('scale-container');
-            const scale = Math.min(window.innerWidth / scaleContainer.offsetWidth, window.innerHeight / scaleContainer.offsetHeight);
+            const scaleX = window.innerWidth / scaleContainer.offsetWidth;
+            const scaleY = window.innerHeight / scaleContainer.offsetHeight;
+            const scale = Math.min(scaleX, scaleY);
             scaleContainer.style.transform = `scale(${scale})`;
         }
 
