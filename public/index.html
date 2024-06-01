@@ -1,415 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .header {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 10px;
-            position: relative;
-        }
-        .logo {
-            width: 20%;
-            height: auto;
-            margin-bottom: 10px;
-        }
-        .title {
-            font-size: 4em;
-            margin: 0;
-            color: #f0ad4e;
-        }
-        .last-updated {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2em;
-            color: #cccccc;
-        }
-        .container {
-            width: 95%;
-            max-width: 1600px;
-            text-align: center;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-        }
-        .cluster-title {
-            font-size: 3em;
-            color: #f0ad4e;
-            margin-top: 10px;
-        }
-        .cluster {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-        }
-        .box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 2vh;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease;
-            flex: 1;
-            min-width: 280px;
-            max-width: 28%;
-            box-sizing: border-box;
-            margin: 10px;
-        }
-        .box-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .box:hover {
-            transform: translateY(-10px);
-        }
-        .figure {
-            font-size: 3em;
-            color: #ffffff;
-            margin: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-        .description {
-            font-size: 2em;
-            color: #cccccc;
-            margin-top: 10px;
-        }
-        .footer {
-            text-align: center;
-            font-size: 2em;
-            color: #cccccc;
-            margin-top: 20px;
-        }
-        .positive-gap {
-            background-color: #28a745 !important;
-        }
-        .negative-gap {
-            background-color: #dc3545 !important;
-        }
-        .green-box {
-            background-color: #28a745 !important;
-        }
-        .red-box {
-            background-color: #dc3545 !important;
-        }
-        .moving-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 5px;
-            background-color: white;
-            animation: moveBar 5s linear infinite;
-        }
-        @keyframes moveBar {
-            0% { left: -5px; }
-            100% { left: 100%; }
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      /* Set the height to 100vh (viewport height) for full-screen view on desktop */
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        @media (max-width: 768px) {
-            body {
-                overflow-y: auto;
-            }
-            .logo {
-                width: 50%;
-            }
-            .title {
-                font-size: 2em;
-            }
-            .last-updated {
-                font-size: 1em;
-                position: static;
-                margin-top: 10px;
-                margin-bottom: 10px;
-                order: 3;
-            }
-            .cluster-title {
-                font-size: 1.5em;
-            }
-            .cluster {
-                flex-direction: column;
-                align-items: center;
-            }
-            .box {
-                max-width: 90%;
-                min-width: 90%;
-                margin: 20px 0;
-            }
-            .figure {
-                font-size: 2em;
-            }
-            .description {
-                font-size: 1.2em;
-            }
-            .footer {
-                font-size: 1em;
-            }
-        }
+    .header {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      position: relative;
+    }
 
-        @media (min-width: 769px) {
-            .container {
-                height: 95vh; /* Ensure container height fits within viewport */
-                overflow: hidden; /* Prevent scrolling */
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: space-around; /* Ensure even spacing */
-            }
-            .cluster {
-                flex-wrap: nowrap;
-                justify-content: space-between; /* Adjust spacing between clusters */
-            }
-            .box {
-                padding: 2vh; /* Adjust padding for better scaling */
-                flex: 1 1 auto;
-                margin: 10px;
-            }
-        }
-    </style>
+    .logo {
+      width: 20%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-size: 4em;
+      margin: 0;
+      color: #f0ad4e;
+    }
+
+    .last-updated {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2em;
+      color: #cccccc;
+    }
+
+    .container {
+      width: 95%;
+      max-width: 1600px;
+      text-align: center;
+      /* Ensure the container takes up the remaining space after header and footer */
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .cluster-title {
+      font-size: 3em;
+      color: #f0ad4e;
+      margin-top: 10px;
+    }
+
+    .cluster {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 2vh;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <img src="logo.png" alt="Logo" class="logo">
-        <h1 class="title">Sales Dashboard</h1>
-    </div>
-    <div class="container">
-        <div class="cluster-title">Sales Performance</div>
-        <div class="cluster" id="performance-cluster"></div>
+  <div class="header">
+    <img src="logo.png" alt="Logo" class="logo">
+    <h1 class="title">Sales Dashboard</h1>
+  </div>
+  <div class="container">
+    <div class="cluster-title">Sales Performance</div>
+    <div class="cluster" id="performance-cluster"></div>
 
-        <div class="cluster-title">Daily Sales</div>
-        <div class="cluster" id="daily-sales-cluster"></div>
+    <div class="cluster-title">Daily Sales</div>
+    <div class="cluster" id="daily-sales-cluster"></div>
 
-        <div class="cluster-title">Daily Targets</div>
-        <div class="cluster" id="daily-targets-cluster"></div>
+    <div class="cluster-title">Daily Targets</div>
+    <div class="cluster" id="daily-targets-cluster"></div>
 
-        <div class="cluster-title" id="booking-title">Booking</div>
-        <div class="cluster" id="booking-cluster"></div>
-    </div>
-    <div class="last-updated" id="lastUpdated">Data As At: </div>
-    <div class="footer" id="footer"></div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
-
-        socket.on('updateData', (data) => {
-            updateDashboard(data);
-        });
-
-        const holidays = [
-            "1/1/2024",  // New Year's Day
-            "5/27/2024", // Memorial Day
-            "7/4/2024",  // Independence Day
-            "9/2/2024",  // Labor Day
-            "11/28/2024", // Thanksgiving Day
-            "11/29/2024", // Day after Thanksgiving
-            "12/24/2024", // Christmas Eve
-            "12/25/2024"  // Christmas Day
-        ];
-
-        function updateDashboard(data) {
-            const targetPercentage = (data.mtdSale / data.monthTarget) * 100;
-            const totalWorkingDays = getWorkingDaysInMonth();
-            const passedWorkingDays = getPassedWorkingDays();
-            const remainingDays = totalWorkingDays - passedWorkingDays;
-            const dailySalesRate = data.mtdSale / passedWorkingDays;
-            const requiredDailyRate = (data.monthTarget - data.mtdSale) / remainingDays;
-
-            const gap = Math.round(data.todaySale - data.yesterdaySale);
-            const gapClass = gap >= 0 ? 'positive-gap' : 'negative-gap';
-            const formattedGap = gap >= 0 ? `$${gap.toLocaleString('en-US')}` : `$${gap.toLocaleString('en-US')}`;
-
-            const formattedMTDSale = Math.round(data.mtdSale).toLocaleString('en-US');
-            const formattedMonthTarget = Math.round(data.monthTarget).toLocaleString('en-US');
-            const formattedYesterdaySale = Math.round(data.yesterdaySale).toLocaleString('en-US');
-            const formattedTodaySale = Math.round(data.todaySale).toLocaleString('en-US');
-            const formattedDailySalesRate = Math.round(dailySalesRate).toLocaleString('en-US');
-            const formattedRequiredDailyRate = Math.round(requiredDailyRate).toLocaleString('en-US');
-            const formattedTargetPercentage = Math.round(targetPercentage).toLocaleString('en-US');
-            const formattedMTDBooking = Math.round(data.mtdBooking).toLocaleString('en-US');
-            const formattedTodayBooking = Math.round(data.todayBooking).toLocaleString('en-US');
-            const formattedBackorder = Math.round(data.backorder).toLocaleString('en-US');
-            const formattedRemainingDays = remainingDays;
-
-            const actualDailyClass = dailySalesRate >= requiredDailyRate ? 'green-box' : 'red-box';
-
-            document.getElementById('performance-cluster').innerHTML = `
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">$${formattedMTDSale}</span>
-                        <span class="description">MTD Sale</span>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">$${formattedMonthTarget}</span>
-                        <span class="description">Target</span>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">${formattedTargetPercentage}%</span>
-                        <span class="description">Achieved</span>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('daily-sales-cluster').innerHTML = `
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">$${formattedYesterdaySale}</span>
-                        <span class="description">Yesterday</span>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">$${formattedTodaySale}</span>
-                        <span class="description">Today</span>
-                    </div>
-                </div>
-                <div class="box ${gapClass}">
-                    <div class="box-content">
-                        <span class="figure">${formattedGap}</span>
-                        <span class="description">Gap</span>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('daily-targets-cluster').innerHTML = `
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">$${formattedRequiredDailyRate}</span>
-                        <span class="description">Required Daily</span>
-                    </div>
-                </div>
-                <div class="box ${actualDailyClass}">
-                    <div class="box-content">
-                        <span class="figure">$${formattedDailySalesRate}</span>
-                        <span class="description">Actual Daily</span>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">${formattedRemainingDays}</span>
-                        <span class="description">Remaining Days</span>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('booking-cluster').innerHTML = `
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">$${formattedMTDBooking}</span>
-                        <span class="description">MTD</span>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">$${formattedTodayBooking}</span>
-                        <span class="description">Today</span>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-content">
-                        <span class="figure">$${formattedBackorder}</span>
-                        <span class="description">Backorder</span>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('booking-title').style.display = 'block'; // Show the subtitle
-            const lastUpdated = `Data As At: ${new Date().toLocaleString()}`;
-            document.getElementById('lastUpdated').innerText = lastUpdated;
-        }
-
-        function getWorkingDaysInMonth() {
-            const currentDate = new Date();
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
-            let workingDays = 0;
-
-            for (let day = 1; day <= lastDayOfMonth; day++) {
-                const date = new Date(year, month, day);
-                if (isWorkingDay(date)) {
-                    workingDays++;
-                }
-            }
-
-            return workingDays;
-        }
-
-        function getPassedWorkingDays() {
-            const currentDate = new Date();
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            const date = currentDate.getDate();
-            const hours = currentDate.getHours();
-            const isAfter4PM = hours >= 16;
-
-            let passedWorkingDays = 0;
-
-            for (let day = 1; day < date; day++) {
-                const dayDate = new Date(year, month, day);
-                if (isWorkingDay(dayDate)) {
-                    passedWorkingDays++;
-                }
-            }
-
-            if (isWorkingDay(currentDate) && isAfter4PM) {
-                passedWorkingDays++;
-            }
-
-            return passedWorkingDays;
-        }
-
-        function isWorkingDay(date) {
-            const dayOfWeek = date.getDay();
-            const dateString = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-            const holidayIndex = holidays.indexOf(dateString);
-            return dayOfWeek !== 0 && dayOfWeek !== 6 && holidayIndex === -1;
-        }
-
-        // Move bar to avoid pixel burning
-        if (window.innerWidth > 768) {
-            setInterval(() => {
-                const bar = document.createElement('div');
-                bar.classList.add('moving-bar');
-                document.body.appendChild(bar);
-                setTimeout(() => document.body.removeChild(bar), 5000);
-            }, 30000);
-        }
-    </script>
+    <div class="cluster-title" id="booking-title">Booking</div>
+    <div class="cluster" id="booking-cluster"></div>
+  </div>
+  <div class="last-updated" id="lastUpdated">Data As At: </div>
+  <div class="footer" id="footer"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
