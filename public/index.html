@@ -21,9 +21,8 @@
     .header {
       width: 100%;
       text-align: center;
+      margin-bottom: 10px;
       position: relative;
-      flex-shrink: 0;
-      padding-top: 10px;
     }
 
     .logo {
@@ -54,7 +53,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-around;
       padding-bottom: 10px;
     }
 
@@ -68,7 +67,6 @@
       display: flex;
       justify-content: space-around;
       width: 100%;
-      flex-wrap: wrap;
     }
 
     .box {
@@ -82,127 +80,6 @@
       justify-content: center;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s ease-in-out;
-      flex: 1 1 28%;
-      margin: 10px;
-    }
-
-    .box-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .figure {
-      font-size: 3em;
-      color: #ffffff;
-      margin: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-
-    .description {
-      font-size: 2em;
-      color: #cccccc;
-      margin-top: 10px;
-    }
-
-    .footer {
-      text-align: center;
-      font-size: 2em;
-      color: #cccccc;
-      margin-top: 20px;
-      flex-shrink: 0;
-    }
-
-    .positive-gap {
-      background-color: #28a745 !important;
-    }
-
-    .negative-gap {
-      background-color: #dc3545 !important;
-    }
-
-    .green-box {
-      background-color: #28a745 !important;
-    }
-
-    .red-box {
-      background-color: #dc3545 !important;
-    }
-
-    @media (max-width: 768px) {
-      body {
-        overflow-y: auto;
-      }
-
-      .logo {
-        width: 50%;
-      }
-
-      .title {
-        font-size: 2em;
-      }
-
-      .last-updated {
-        font-size: 1em;
-        position: static;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        order: 3;
-      }
-
-      .cluster-title {
-        font-size: 1.5em;
-      }
-
-      .cluster {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .box {
-        max-width: 90%;
-        min-width: 90%;
-        margin: 20px 0;
-      }
-
-      .figure {
-        font-size: 2em;
-      }
-
-      .description {
-        font-size: 1.2em;
-      }
-
-      .footer {
-        font-size: 1em;
-      }
-    }
-
-    @media (min-width: 769px) {
-      .container {
-        height: calc(100vh - 100px);
-      }
-
-      .box {
-        flex: 1 1 28%;
-        margin: 10px;
-      }
-
-      .figure {
-        font-size: 2.5vw;
-      }
-
-      .description {
-        font-size: 1.5vw;
-      }
     }
   </style>
 </head>
@@ -227,196 +104,6 @@
   <div class="last-updated" id="lastUpdated">Data As At: </div>
   <div class="footer" id="footer"></div>
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-
-    socket.on('updateData', (data) => {
-      updateDashboard(data);
-    });
-
-    const holidays = [
-      "1/1/2024",  // New Year's Day
-      "5/27/2024", // Memorial Day
-      "7/4/2024",  // Independence Day
-      "9/2/2024",  // Labor Day
-      "11/28/2024", // Thanksgiving Day
-      "11/29/2024", // Day after Thanksgiving
-      "12/24/2024", // Christmas Eve
-      "12/25/2024"  // Christmas Day
-    ];
-
-    function updateDashboard(data) {
-      const targetPercentage = (data.mtdSale / data.monthTarget) * 100;
-      const totalWorkingDays = getWorkingDaysInMonth();
-      const passedWorkingDays = getPassedWorkingDays();
-      const remainingDays = totalWorkingDays - passedWorkingDays;
-      const dailySalesRate = data.mtdSale / passedWorkingDays;
-      const requiredDailyRate = (data.monthTarget - data.mtdSale) / remainingDays;
-
-      const gap = Math.round(data.todaySale - data.yesterdaySale);
-      const gapClass = gap >= 0 ? 'positive-gap' : 'negative-gap';
-      const formattedGap = gap >= 0 ? `$${gap.toLocaleString('en-US')}` : `$${gap.toLocaleString('en-US')}`;
-
-      const formattedMTDSale = Math.round(data.mtdSale).toLocaleString('en-US');
-      const formattedMonthTarget = Math.round(data.monthTarget).toLocaleString('en-US');
-      const formattedYesterdaySale = Math.round(data.yesterdaySale).toLocaleString('en-US');
-      const formattedTodaySale = Math.round(data.todaySale).toLocaleString('en-US');
-      const formattedDailySalesRate = Math.round(dailySalesRate).toLocaleString('en-US');
-      const formattedRequiredDailyRate = Math.round(requiredDailyRate).toLocaleString('en-US');
-      const formattedTargetPercentage = Math.round(targetPercentage).toLocaleString('en-US');
-      const formattedMTDBooking = Math.round(data.mtdBooking).toLocaleString('en-US');
-      const formattedTodayBooking = Math.round(data.todayBooking).toLocaleString('en-US');
-      const formattedBackorder = Math.round(data.backorder).toLocaleString('en-US');
-      const formattedRemainingDays = remainingDays;
-
-      const actualDailyClass = dailySalesRate >= requiredDailyRate ? 'green-box' : 'red-box';
-
-      document.getElementById('performance-cluster').innerHTML = `
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">$${formattedMTDSale}</span>
-            <span class="description">MTD Sale</span>
-          </div>
-        </div>
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">$${formattedMonthTarget}</span>
-            <span class="description">Target</span>
-          </div>
-        </div>
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">${formattedTargetPercentage}%</span>
-            <span class="description">Achieved</span>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('daily-sales-cluster').innerHTML = `
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">$${formattedYesterdaySale}</span>
-            <span class="description">Yesterday</span>
-          </div>
-        </div>
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">$${formattedTodaySale}</span>
-            <span class="description">Today</span>
-          </div>
-        </div>
-        <div class="box ${gapClass}">
-          <div class="box-content">
-            <span class="figure">${formattedGap}</span>
-            <span class="description">Gap</span>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('daily-targets-cluster').innerHTML = `
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">$${formattedRequiredDailyRate}</span>
-            <span class="description">Required Daily</span>
-          </div>
-        </div>
-        <div class="box ${actualDailyClass}">
-          <div class="box-content">
-            <span class="figure">$${formattedDailySalesRate}</span>
-            <span class="description">Actual Daily</span>
-          </div>
-        </div>
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">${formattedRemainingDays}</span>
-            <span class="description">Remaining Days</span>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('booking-cluster').innerHTML = `
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">$${formattedMTDBooking}</span>
-            <span class="description">MTD</span>
-          </div>
-        </div>
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">$${formattedTodayBooking}</span>
-            <span class="description">Today</span>
-          </div>
-        </div>
-        <div class="box">
-          <div class="box-content">
-            <span class="figure">$${formattedBackorder}</span>
-            <span class="description">Backorder</span>
-          </div>
-        </div>
-      `;
-
-      document.getElementById('booking-title').style.display = 'block'; // Show the subtitle
-      const lastUpdated = `Data As At: ${new Date().toLocaleString()}`;
-      document.getElementById('lastUpdated').innerText = lastUpdated;
-    }
-
-    function getWorkingDaysInMonth() {
-      const currentDate = new Date();
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-      const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
-      let workingDays = 0;
-
-      for (let day = 1; day <= lastDayOfMonth; day++) {
-        const date = new Date(year, month, day);
-        if (isWorkingDay(date)) {
-          workingDays++;
-        }
-      }
-
-      return workingDays;
-    }
-
-    function getPassedWorkingDays() {
-      const currentDate = new Date();
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-      const date = currentDate.getDate();
-      const hours = currentDate.getHours();
-      const isAfter4PM = hours >= 16;
-
-      let passedWorkingDays = 0;
-
-      for (let day = 1; day < date; day++) {
-        const dayDate = new Date(year, month, day);
-        if (isWorkingDay(dayDate)) {
-          passedWorkingDays++;
-        }
-      }
-
-      if (isWorkingDay(currentDate) && isAfter4PM) {
-        passedWorkingDays++;
-      }
-
-      return passedWorkingDays;
-    }
-
-    function isWorkingDay(date) {
-      const dayOfWeek = date.getDay();
-      const dateString = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-      const holidayIndex = holidays.indexOf(dateString);
-      return dayOfWeek !== 0 && dayOfWeek !== 6 && holidayIndex === -1;
-    }
-
-    // Move bar to avoid pixel burning
-    if (window.innerWidth > 768) {
-      setInterval(() => {
-        const bar = document.createElement('div');
-        bar.classList.add('moving-bar');
-        document.body.appendChild(bar);
-        setTimeout(() => document.body.removeChild(bar), 5000);
-      }, 30000);
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
