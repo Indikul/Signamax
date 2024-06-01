@@ -6,29 +6,30 @@
     <title>Sales Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Roboto', sans-serif;
+        html, body {
             margin: 0;
             padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            overflow: hidden;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
         }
         .header {
-            width: 100%;
             text-align: center;
             margin-bottom: 10px;
-            position: relative;
         }
         .logo {
             width: 20%;
             height: auto;
-            margin-bottom: 10px;
         }
         .title {
             font-size: 4em;
@@ -36,38 +37,35 @@
             color: #f0ad4e;
         }
         .last-updated {
-            position: absolute;
-            top: 20px;
-            right: 20px;
             font-size: 2em;
             color: #cccccc;
+            position: absolute;
+            top: 10px;
+            right: 20px;
         }
-        .container {
-            width: 95%;
-            max-width: 1600px;
-            text-align: center;
+        .clusters {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex-grow: 1;
+            width: 95%;
+            max-width: 1600px;
         }
         .cluster-title {
             font-size: 3em;
             color: #f0ad4e;
-            margin-top: 20px;
+            margin: 20px 0 10px;
         }
         .cluster {
             display: flex;
-            justify-content: space-around;
-            margin-top: 10px;
+            justify-content: space-between;
             width: 100%;
-            flex-wrap: wrap;
+            margin-bottom: 10px;
         }
         .box {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
             display: flex;
             flex-direction: column;
@@ -75,11 +73,9 @@
             justify-content: center;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: transform 0.2s ease;
-            box-sizing: border-box;
             margin: 10px;
             flex-grow: 1;
-            flex-basis: 30%;
-            max-width: 30%;
+            max-width: 28%;
             min-width: 200px;
         }
         .box-content {
@@ -90,9 +86,6 @@
             width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-        .box:hover {
-            transform: translateY(-10px);
         }
         .figure {
             font-size: 3em;
@@ -110,10 +103,10 @@
             margin-top: 10px;
         }
         .footer {
-            text-align: center;
             font-size: 2em;
             color: #cccccc;
             margin-top: 20px;
+            text-align: center;
         }
         .positive-gap {
             background-color: #28a745 !important;
@@ -140,11 +133,7 @@
             0% { left: -5px; }
             100% { left: 100%; }
         }
-
         @media (max-width: 768px) {
-            body {
-                overflow-y: auto;
-            }
             .logo {
                 width: 50%;
             }
@@ -155,11 +144,14 @@
                 font-size: 1em;
                 position: static;
                 margin-top: 10px;
-                margin-bottom: 10px;
                 order: 3;
             }
             .cluster-title {
                 font-size: 1.5em;
+            }
+            .cluster {
+                flex-direction: column;
+                align-items: center;
             }
             .box {
                 max-width: 90%;
@@ -179,24 +171,26 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <img src="logo.png" alt="Logo" class="logo">
-        <h1 class="title">Sales Dashboard</h1>
-    </div>
-    <div class="container">
-        <div class="cluster-title">Sales Performance</div>
-        <div class="cluster" id="performance-cluster"></div>
-
-        <div class="cluster-title">Daily Sales</div>
-        <div class="cluster" id="daily-sales-cluster"></div>
-
-        <div class="cluster-title">Daily Targets</div>
-        <div class="cluster" id="daily-targets-cluster"></div>
-
-        <div class="cluster-title" id="booking-title">Booking</div>
-        <div class="cluster" id="booking-cluster"></div>
-    </div>
     <div class="last-updated" id="lastUpdated">Data As At: </div>
+    <div class="container">
+        <div class="header">
+            <img src="logo.png" alt="Logo" class="logo">
+            <h1 class="title">Sales Dashboard</h1>
+        </div>
+        <div class="clusters">
+            <div class="cluster-title">Sales Performance</div>
+            <div class="cluster" id="performance-cluster"></div>
+
+            <div class="cluster-title">Daily Sales</div>
+            <div class="cluster" id="daily-sales-cluster"></div>
+
+            <div class="cluster-title">Daily Targets</div>
+            <div class="cluster" id="daily-targets-cluster"></div>
+
+            <div class="cluster-title" id="booking-title">Booking</div>
+            <div class="cluster" id="booking-cluster"></div>
+        </div>
+    </div>
     <div class="footer" id="footer"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
