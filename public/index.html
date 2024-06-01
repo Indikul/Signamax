@@ -25,15 +25,8 @@
             margin-bottom: 10px;
             position: relative;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .header-top {
-            display: flex;
             justify-content: space-between;
             align-items: flex-end; /* Align items to the bottom */
-            width: 100%;
-            padding: 0 20px;
         }
         .logo {
             width: 20%;
@@ -43,7 +36,6 @@
             font-size: 4em;
             margin: 0;
             color: #f0ad4e;
-            padding-bottom: 20px; /* Add some padding to align properly */
         }
         .last-updated {
             font-size: 2em;
@@ -63,7 +55,6 @@
             font-size: 3em;
             color: #f0ad4e;
             margin-top: 10px;
-            text-align: center; /* Center-align cluster titles */
         }
         .cluster {
             display: flex;
@@ -150,21 +141,18 @@
             body {
                 overflow-y: auto;
             }
-            .header-top {
-                flex-direction: column;
-                align-items: center;
-            }
             .logo {
                 width: 50%;
             }
             .title {
                 font-size: 2em;
-                margin-top: 10px;
-                order: 2;
                 display: block; /* Ensure title is shown on mobile */
             }
             .last-updated {
                 font-size: 1em;
+                position: static;
+                margin-top: 10px;
+                margin-bottom: 10px;
                 order: 3;
             }
             .cluster-title {
@@ -216,11 +204,8 @@
 </head>
 <body>
     <div class="header">
-        <div class="header-top">
-            <img src="logo.png" alt="Logo" class="logo">
-            <div class="last-updated" id="lastUpdated">Data As At: </div>
-        </div>
-        <h1 class="title">Sales Dashboard</h1>
+        <img src="logo.png" alt="Logo" class="logo">
+        <div class="last-updated" id="lastUpdated">Data As At: </div>
     </div>
     <div class="container">
         <div class="cluster-title">Sales Performance</div>
