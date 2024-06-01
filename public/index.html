@@ -55,6 +55,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
+      padding-bottom: 10px;
+      overflow: hidden;
     }
 
     .cluster-title {
@@ -80,8 +82,6 @@
       justify-content: center;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s ease-in-out;
-      flex: 1 1 28%;
-      margin: 10px;
     }
 
     .box-content {
@@ -187,6 +187,7 @@
     @media (min-width: 769px) {
       .container {
         height: calc(100vh - 120px);
+        justify-content: space-around;
       }
 
       .box {
