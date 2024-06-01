@@ -25,8 +25,14 @@
             margin-bottom: 10px;
             position: relative;
             display: flex;
+            flex-direction: column;
             align-items: center;
+        }
+        .header-top {
+            display: flex;
             justify-content: space-between;
+            align-items: center;
+            width: 100%;
             padding: 0 20px;
         }
         .logo {
@@ -143,7 +149,7 @@
             body {
                 overflow-y: auto;
             }
-            .header {
+            .header-top {
                 flex-direction: column;
                 align-items: center;
             }
@@ -205,9 +211,11 @@
 </head>
 <body>
     <div class="header">
-        <img src="logo.png" alt="Logo" class="logo">
+        <div class="header-top">
+            <img src="logo.png" alt="Logo" class="logo">
+            <div class="last-updated" id="lastUpdated">Data As At: </div>
+        </div>
         <h1 class="title">Sales Dashboard</h1>
-        <div class="last-updated" id="lastUpdated">Data As At: </div>
     </div>
     <div class="container">
         <div class="cluster-title">Sales Performance</div>
