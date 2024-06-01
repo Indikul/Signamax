@@ -24,13 +24,11 @@
             text-align: center;
             margin-bottom: 10px;
             position: relative;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end; /* Align items to the bottom */
         }
         .logo {
             width: 20%;
             height: auto;
+            margin-bottom: 10px;
         }
         .title {
             font-size: 4em;
@@ -38,6 +36,9 @@
             color: #f0ad4e;
         }
         .last-updated {
+            position: absolute;
+            top: 20px;
+            right: 20px;
             font-size: 2em;
             color: #cccccc;
         }
@@ -146,7 +147,6 @@
             }
             .title {
                 font-size: 2em;
-                display: block; /* Ensure title is shown on mobile */
             }
             .last-updated {
                 font-size: 1em;
@@ -179,9 +179,6 @@
         }
 
         @media (min-width: 769px) {
-            .title {
-                display: none; /* Hide title on desktop */
-            }
             .container {
                 height: 95vh; /* Ensure container height fits within viewport */
                 overflow: hidden; /* Prevent scrolling */
@@ -205,7 +202,7 @@
 <body>
     <div class="header">
         <img src="logo.png" alt="Logo" class="logo">
-        <div class="last-updated" id="lastUpdated">Data As At: </div>
+        <h1 class="title">Sales Dashboard</h1>
     </div>
     <div class="container">
         <div class="cluster-title">Sales Performance</div>
@@ -220,6 +217,7 @@
         <div class="cluster-title" id="booking-title">Booking</div>
         <div class="cluster" id="booking-cluster"></div>
     </div>
+    <div class="last-updated" id="lastUpdated">Data As At: </div>
     <div class="footer" id="footer"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
