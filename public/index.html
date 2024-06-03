@@ -36,9 +36,6 @@
             color: #f0ad4e;
         }
         .last-updated {
-            position: absolute;
-            top: 20px;
-            right: 20px;
             font-size: 2em;
             color: #cccccc;
         }
@@ -179,16 +176,13 @@
         }
 
         @media (min-width: 769px) {
-            .logo {
+            .logo, .title {
                 display: none;
             }
-            .title {
+            .last-updated {
                 position: absolute;
-                top: 0;
-                left: 50%;
-                transform: translateX(-50%);
-                margin: 0;
-                padding-bottom: 20px;
+                bottom: 20px;
+                right: 20px;
             }
             .container {
                 height: 95vh; /* Ensure container height fits within viewport */
@@ -212,7 +206,6 @@
 </head>
 <body>
     <div class="header">
-        <h1 class="title">Sales Dashboard</h1>
         <div class="last-updated" id="lastUpdated">Data As At: </div>
     </div>
     <div class="container">
