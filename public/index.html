@@ -179,6 +179,17 @@
         }
 
         @media (min-width: 769px) {
+            .logo {
+                display: none;
+            }
+            .title {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                margin: 0;
+                padding-bottom: 20px;
+            }
             .container {
                 height: 95vh; /* Ensure container height fits within viewport */
                 overflow: hidden; /* Prevent scrolling */
@@ -201,8 +212,8 @@
 </head>
 <body>
     <div class="header">
-        <img src="logo.png" alt="Logo" class="logo">
         <h1 class="title">Sales Dashboard</h1>
+        <div class="last-updated" id="lastUpdated">Data As At: </div>
     </div>
     <div class="container">
         <div class="cluster-title">Sales Performance</div>
@@ -217,7 +228,6 @@
         <div class="cluster-title" id="booking-title">Booking</div>
         <div class="cluster" id="booking-cluster"></div>
     </div>
-    <div class="last-updated" id="lastUpdated">Data As At: </div>
     <div class="footer" id="footer"></div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
