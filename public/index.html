@@ -18,7 +18,7 @@
             justify-content: flex-start;
             height: 100vh;
             overflow: hidden;
-            position: relative; /* Added for positioning */
+            position: relative;
         }
         .header {
             width: 100%;
@@ -46,18 +46,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Center align clusters */
+            justify-content: center;
         }
         .cluster-title {
             font-size: 3vh;
             color: #f0ad4e;
-            margin: 5px 0; /* Reduced vertical margin */
+            margin: 5px 0;
         }
         .cluster {
             display: flex;
             justify-content: space-around;
             width: 100%;
-            margin-bottom: 5px; /* Reduced bottom margin */
+            margin-bottom: 5px;
         }
         .box {
             background: rgba(255, 255, 255, 0.1);
@@ -180,19 +180,19 @@
                 display: none;
             }
             .container {
-                height: 90vh; /* Adjusted to fit within viewport */
-                overflow: hidden; /* Prevent scrolling */
+                height: 90vh;
+                overflow: hidden;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: center; /* Center align clusters */
+                justify-content: center;
             }
             .cluster {
                 flex-wrap: nowrap;
-                justify-content: space-between; /* Adjust spacing between clusters */
+                justify-content: space-between;
             }
             .box {
-                padding: 2vh; /* Adjust padding for better scaling */
+                padding: 2vh;
                 flex: 1 1 auto;
                 margin: 10px;
             }
@@ -200,9 +200,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="last-updated" id="lastUpdated">Data As At: </div>
-    </div>
+    <div class="header"></div>
     <div class="container">
         <div class="cluster-title">Sales Performance</div>
         <div class="cluster" id="performance-cluster"></div>
@@ -217,6 +215,7 @@
         <div class="cluster" id="booking-cluster"></div>
     </div>
     <div class="footer" id="footer"></div>
+    <div class="last-updated" id="lastUpdated">Data As At: </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
